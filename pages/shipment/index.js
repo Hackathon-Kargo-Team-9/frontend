@@ -12,8 +12,9 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const NavbarContainer = styled.nav`
+const NavbarContainer = styled.nav`   
   height: 80px;
+  width: 100%;
   border-bottom: 1px solid var(--grey);
   display: flex;
   justify-content: space-between;
