@@ -143,6 +143,16 @@ function Trucks() {
       });
   }
 
+  function filterredTrucks() {
+    return trucks.filter((truck) => {
+      return (
+        truck.plate_number.toLowerCase().includes(search.toLowerCase()) &&
+        selectedTruckType &&
+        truck.truck_type == selectedTruckType
+      );
+    });
+  }
+
   useEffect(() => {
     fetchTrucks();
   }, []);
@@ -177,7 +187,7 @@ function Trucks() {
           </div>
         </Filter>
         <TableContainer>
-          <DataTable columns={columns} data={trucks} />
+          <DataTable columns={columns} data={filterredTrucks()} />
         </TableContainer>
       </Content>
     </Container>
