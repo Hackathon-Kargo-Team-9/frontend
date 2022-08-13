@@ -12,8 +12,9 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
-const NavbarContainer = styled.nav`
+const NavbarContainer = styled.nav`   
   height: 80px;
+  width: 100%;
   border-bottom: 1px solid var(--grey);
   display: flex;
   justify-content: space-between;
@@ -26,9 +27,9 @@ const Links = styled.div`
   gap: 20px;
 `;
 
-const Filter = styled.div`
+const Search = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   margin-top: 20px;
 `;
 
@@ -129,11 +130,13 @@ function Shipment() {
 
   const [search, setSearch] = useState("");
 
+  const handleAddShipment = {}
+
   return (
     <Container>
       <Navbar />
-      <Filter>
-        <div>filter truck</div>
+      <Search>
+        <button onClick={handleAddShipment}>Add Shipment</button>
         <div>
           <input
             type="text"
@@ -141,7 +144,7 @@ function Shipment() {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-      </Filter>
+      </Search>
       <TableContainer>
         <DataTable columns={columns} data={data} />
       </TableContainer>
