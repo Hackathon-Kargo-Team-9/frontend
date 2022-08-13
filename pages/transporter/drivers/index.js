@@ -2,14 +2,17 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
+import Select from "react-select";
 
 const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   background-color: var(--light);
   color: var(--darkgrey);
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
+  overflow: auto;
+  padding: 20px;
 `;
 
 const NavbarContainer = styled.nav`
@@ -28,12 +31,13 @@ const Links = styled.div`
 
 const Filter = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 20px;
 `;
 
 const TableContainer = styled.div`
   margin-top: 20px;
+  min-height: 100vh;
 `;
 
 function Navbar() {
@@ -50,6 +54,43 @@ function Navbar() {
 }
 
 function Drivers() {
+  function onSelectAction(action, driver) {
+    switch (action) {
+      case "update status":
+        updateStatus(driver);
+        break;
+      case "change detail":
+        changeDetail(driver);
+        break;
+    }
+  }
+  function updateStatus(driver) {
+    console.log("change status to negate ", driver.status);
+  }
+  function changeDetail(driver) {
+    console.log("edit ", driver.driver_name);
+    location.href = "/transporter/drivers/edit/" + driver.driver_name;
+  }
+  const options_active = [
+    {
+      label: "Change Detail",
+      value: "change detail",
+    },
+    {
+      label: "Deactivate Unit",
+      value: "update status",
+    },
+  ];
+  const options_deactive = [
+    {
+      label: "Change Detail",
+      value: "change detail",
+    },
+    {
+      label: "Activate Unit",
+      value: "update status",
+    },
+  ];
   const columns = [
     {
       name: "Driver Name",
@@ -69,6 +110,12 @@ function Drivers() {
     },
     {
       name: "",
+      cell: (row) => (
+        <Select
+          options={row.status === "Active" ? options_active : options_deactive}
+          onChange={(i) => onSelectAction(i.value, row)}
+        />
+      ),
     },
   ];
 
