@@ -8,13 +8,14 @@ const Container = styled.div`
   width: 100%;
   background-color: var(--light);
   color: var(--darkgrey);
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
+  overflow: auto;
+  padding: 20px;
 `;
 
-const NavbarContainer = styled.nav`   
+const NavbarContainer = styled.nav`
   height: 80px;
-  width: 100%;
   border-bottom: 1px solid var(--grey);
   display: flex;
   justify-content: space-between;
@@ -30,11 +31,14 @@ const Links = styled.div`
 const Search = styled.div`
   display: flex;
   justify-content: end;
+  align-items: center;
   margin-top: 20px;
+  gap: 48px
 `;
 
 const TableContainer = styled.div`
   margin-top: 20px;
+  min-height: 100vh;
 `;
 
 function Navbar() {

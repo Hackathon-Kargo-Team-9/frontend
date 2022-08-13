@@ -89,8 +89,8 @@ function AllocateShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleAllocate}>Allocated</button>
+          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
+          <button style={{width:"100%"}} onClick={handleAllocate}>Allocate</button>
         </ButtonRow>
       </Form>
     </Container>

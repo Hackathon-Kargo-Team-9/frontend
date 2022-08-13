@@ -77,8 +77,8 @@ function EditShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleUpdate}>Update</button>
+          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
+          <button style={{width:"100%"}} onClick={handleUpdate}>Update</button>
         </ButtonRow>
       </Form>
     </Container>

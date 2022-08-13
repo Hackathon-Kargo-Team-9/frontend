@@ -130,8 +130,8 @@ function AddShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
+          <button style={{width:"100%"}} onClick={handleSave}>Save</button>
         </ButtonRow>
       </Form>
     </Container>
