@@ -29,12 +29,6 @@ const Label = styled.label`
   width: 150px;
 `;
 
-const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  padding: 5px 10px;
-`;
-
 const ButtonRow = styled.div`
   display: flex;
   flex-direction: row;
