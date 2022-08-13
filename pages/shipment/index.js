@@ -23,7 +23,7 @@ const Search = styled.div`
   justify-content: end;
   align-items: center;
   margin-top: 20px;
-  gap: 48px
+  gap: 48px;
 `;
 
 const TableContainer = styled.div`
@@ -32,7 +32,6 @@ const TableContainer = styled.div`
 `;
 
 function Shipment() {
-
   const options = [
     {
       label: "Allocate Shipment",
@@ -47,10 +46,10 @@ function Shipment() {
   function onSelectAction(action) {
     switch (action) {
       case "Allocate Shipment":
-        location.href = "/shipment/allocate/"
+        location.href = "/shipment/allocate/";
         break;
       case "Update Status":
-        location.href = "/shipment/edit/"
+        location.href = "/shipment/edit/";
         break;
     }
   }
@@ -65,7 +64,7 @@ function Shipment() {
       selector: (row) => row.license_number,
     },
     {
-      name: "Driver\'s Name",
+      name: "Driver's Name",
       selector: (row) => "",
     },
     {
@@ -95,14 +94,13 @@ function Shipment() {
     },
   ];
 
-
   const [search, setSearch] = useState("");
   const [selectedShipment, setSelectedShipment] = useState(null);
   const [shipment, setShipment] = useState([]);
 
   const handleAddShipment = () => {
-    window.location.assign("/shipment/add")
-  }
+    window.location.assign("/shipment/add");
+  };
 
   function fetchTrucks() {
     axios

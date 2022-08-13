@@ -145,11 +145,13 @@ function Trucks() {
 
   function filterredTrucks() {
     return trucks.filter((truck) => {
-      return (
-        truck.plate_number.toLowerCase().includes(search.toLowerCase()) &&
-        selectedTruckType &&
-        truck.truck_type == selectedTruckType
-      );
+      if (selectedTruckType) {
+        return (
+          truck.truck_type == selectedTruckType &&
+          truck.plate_number.toLowerCase().includes(search.toLowerCase())
+        );
+      }
+      return truck.plate_number.toLowerCase().includes(search.toLowerCase());
     });
   }
 
