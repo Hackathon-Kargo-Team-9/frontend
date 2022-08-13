@@ -51,12 +51,13 @@ function AllocateShipment() {
   return (
     <Container>
       <Form>
-        <h1>Edit Truck</h1>
+        <h1>Allocate Shipment</h1>
         <FormRow>
           <Label htmlFor="truck">Truck</Label>
           <Input
             type="text"
             value={truck}
+            placeholder="Search truck here"
             onChange={(e) => setTruck(e.target.value)}
           />
         </FormRow>
@@ -65,6 +66,7 @@ function AllocateShipment() {
           <Input
             type="text"
             value={driver}
+            placeholder="Search driver here"
             onChange={(e) => setDriver(e.target.value)}
           />
         </FormRow>
