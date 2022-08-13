@@ -49,7 +49,7 @@ function Navbar() {
   );
 }
 
-function Transporter() {
+function Trucks() {
   const columns = [
     {
       name: "License Number",
@@ -108,4 +108,4 @@ function Transporter() {
   );
 }
 
-export default Transporter;
+export default Trucks;
