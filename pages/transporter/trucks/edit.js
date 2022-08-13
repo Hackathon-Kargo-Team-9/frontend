@@ -1,7 +1,5 @@
-import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
-import DataTable from "react-data-table-component";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -10,30 +8,9 @@ const Container = styled.div`
   color: var(--darkgrey);
   max-width: 500px;
   margin: 0 auto;
-`;
-
-const NavbarContainer = styled.nav`
-  height: 80px;
-  border-bottom: 1px solid var(--grey);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 20px;
-`;
-
-const Links = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const Filter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-`;
-
-const TableContainer = styled.div`
-  margin-top: 20px;
 `;
 
 const Form = styled.div`
@@ -66,6 +43,7 @@ function EditTruck() {
   return (
     <Container>
       <Form>
+        <h1>Edit Truck</h1>
         <FormRow>
           <Label htmlFor="license">License Number</Label>
           <Input

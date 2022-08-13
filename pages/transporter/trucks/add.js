@@ -8,6 +8,9 @@ const Container = styled.div`
   color: var(--darkgrey);
   max-width: 500px;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Form = styled.div`
@@ -40,6 +43,7 @@ function AddTrucks() {
   return (
     <Container>
       <Form>
+        <h1>Add Truck</h1>
         <FormRow>
           <Label htmlFor="license">License Number</Label>
           <Input
