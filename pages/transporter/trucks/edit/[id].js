@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import styled from "styled-components";
+import Select from "react-select";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -35,6 +36,10 @@ const Input = styled.input`
   width: 100%;
   height: 40px;
   padding: 5px 10px;
+`;
+
+const CustomSelect = styled(Select)`
+  width: 100%;
 `;
 
 function EditTruck() {
@@ -97,18 +102,44 @@ function EditTruck() {
         </FormRow>
         <FormRow>
           <Label htmlFor="license">License Type</Label>
-          <Input
-            type="text"
-            value={plateType}
-            onInput={(e) => setPlateType(e.target.value)}
+          <CustomSelect
+            value={{ label: plateType, value: plateType }}
+            options={[
+              {
+                label: "Black",
+                value: "Black",
+              },
+              {
+                label: "Yellow",
+                value: "Yellow",
+              },
+            ]}
+            onChange={(item) => setPlateType(item.value)}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="license">Truck Type</Label>
-          <Input
-            type="text"
-            value={truckType}
-            onInput={(e) => setTruckType(e.target.value)}
+          <CustomSelect
+            value={{ label: truckType, value: truckType }}
+            options={[
+              {
+                label: "Tronton",
+                value: "Tronton",
+              },
+              {
+                label: "Container",
+                value: "Container",
+              },
+              {
+                label: "CDE",
+                value: "CDE",
+              },
+              {
+                label: "Pickup",
+                value: "Pickup",
+              },
+            ]}
+            onChange={(item) => setTruckType(item.value)}
           />
         </FormRow>
         <FormRow>
@@ -119,7 +150,7 @@ function EditTruck() {
             onInput={(e) => setProductionYear(e.target.value)}
           />
         </FormRow>
-        <button onClick={() => submitEdit()}>Edit</button>
+        <button onClick={() => submitEdit()}>Save Unit</button>
       </Form>
     </Container>
   );

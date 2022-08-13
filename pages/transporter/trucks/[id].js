@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -38,12 +39,32 @@ const Input = styled.input`
 
 function TruckDetail() {
   const router = useRouter();
-  const { id } = router.query;
+  const query = router.query;
 
-  const [licenseNumber, setLicenseNumber] = useState("B 1234 ABC");
-  const [licenseType, setLicenseType] = useState("Blue");
-  const [truckType, setTruckType] = useState("Tronton");
-  const [productionYear, setProductionYear] = useState("2012");
+  const [plateNumber, setPlateNumber] = useState("");
+  const [plateType, setPlateType] = useState("");
+  const [truckType, setTruckType] = useState("");
+  const [productionYear, setProductionYear] = useState("");
+
+  function fetchDetail() {
+    axios
+      .get(
+        `https://backend-hackathon-kargo-team9.herokuapp.com/truck/${query.id}/`
+      )
+      .then((res) => {
+        const data = res.data;
+        setPlateNumber(data.plate_number);
+        setPlateType(data.plate_type);
+        setTruckType(data.truck_type);
+        setProductionYear(data.production_year);
+      });
+  }
+
+  useEffect(() => {
+    if (query.id) {
+      fetchDetail();
+    }
+  }, [query]);
 
   return (
     <Container>
@@ -54,11 +75,11 @@ function TruckDetail() {
         <h1>Truck Detail</h1>
         <FormRow>
           <Label htmlFor="license">License Number</Label>
-          <Input type="text" value={licenseNumber} disabled />
+          <Input type="text" value={plateNumber} disabled />
         </FormRow>
         <FormRow>
           <Label htmlFor="license">License Type</Label>
-          <Input type="text" value={licenseType} disabled />
+          <Input type="text" value={plateType} disabled />
         </FormRow>
         <FormRow>
           <Label htmlFor="license">Truck Type</Label>
