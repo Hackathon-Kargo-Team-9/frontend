@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Head from "next/head";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -39,6 +40,18 @@ function AddDrivers() {
   const [driverName, setDriverName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+function onSubmit() {
+  axios
+    .post("https://backend-hackathon-kargo-team9.herokuapp.com/driver/", {
+      name: driverName,
+      phone_number: phoneNumber,
+      driver_license: "12345",
+      status: "Active",
+    })
+    .then((res) => (location.href = "/transporter/drivers"))
+    .catch((err) => console.log(err));
+}
+
   return (
     <Container>
       <Head>
@@ -62,7 +75,7 @@ function AddDrivers() {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </FormRow>
-        <button>Save Driver</button>
+        <button onClick={onSubmit}>Save Driver</button>
       </Form>
     </Container>
   );

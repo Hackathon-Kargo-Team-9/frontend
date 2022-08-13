@@ -1,10 +1,11 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import Select from "react-select";
 import Navbar from "../../../components/Navbar";
 import Content from "../../../components/Content";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -67,7 +68,9 @@ function Drivers() {
   const columns = [
     {
       name: "Driver Name",
-      selector: (row) => row.driver_name,
+      cell: (row) => (
+        <Link href={`/transporter/drivers/${row.id}`}>{row.name}</Link>
+      ),
     },
     {
       name: "Phone Number",
@@ -75,7 +78,7 @@ function Drivers() {
     },
     {
       name: "Created At",
-      selector: (row) => row.created_at,
+      selector: (row) => row.create_time,
     },
     {
       name: "Status",
@@ -108,6 +111,20 @@ function Drivers() {
   ];
 
   const [search, setSearch] = useState("");
+  const [drivers, setDrivers] = useState("");
+
+  function fetchDrivers() {
+    axios
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/driver/")
+      .then((res) => {
+        setDrivers(res.data);
+      });
+  }
+
+  useEffect(() => {
+    fetchDrivers();
+  }, []);
+
   return (
     <Container>
       <Navbar />
@@ -115,7 +132,7 @@ function Drivers() {
         <Filter>
           <button
               style={{ marginRight: "10px" }}
-              onClick={() => location.assign("/transporter/trucks/add")}
+              onClick={() => location.assign("/transporter/drivers/add")}
             >
               Add Driver
           </button>
@@ -123,12 +140,13 @@ function Drivers() {
             <input
               type="text"
               value={search}
+              placeholder="Search"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </Filter>
         <TableContainer>
-          <DataTable columns={columns} data={data} />
+          <DataTable columns={columns} data={drivers} />
         </TableContainer>
       </Content>
     </Container>

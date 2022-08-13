@@ -36,10 +36,30 @@ const Input = styled.input`
 `;
 
 function DetailDrivers() {
-  const [driverName, setDriverName] = useState("Jake");
-  const [phoneNumber, setPhoneNumber] = useState("+62819182");
-  const [createdAt, setCreatedAt] = useState("2 August 2020");
-  const [status, setStatus] = useState("Active");
+  const [driverName, setDriverName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+  const [status, setStatus] = useState("");
+
+  function fetchDetail() {
+    axios
+      .get(
+        `https://backend-hackathon-kargo-team9.herokuapp.com/driver/${query.id}/`
+      )
+      .then((res) => {
+        const data = res.data;
+        setDriverName(data.name);
+        setPhoneNumber(data.phone_number);
+        setCreatedAt(data.create_time);
+        setStatus(data.status);
+      });
+  }
+
+  useEffect(() => {
+    if (query.id) {
+      fetchDetail();
+    }
+  }, [query]);
 
   return (
     <Container>
