@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Select from "react-select";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -42,9 +43,34 @@ const ButtonRow = styled.div`
 
 function AddShipment() {
 
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
-  const [date, setDate] = useState("");
+  const [origins, setOrigins] = useState({
+    data: [
+      {
+        label: "Jakarta",
+        value: "Jakarta",
+      },
+      {
+        label: "Bandung",
+        value: "Bandung",
+      }
+    ]
+  })
+  const [destinations, setDestinations] = useState({
+    data: [
+      {
+        label: "Jakarta",
+        value: "Jakarta",
+      },
+      {
+        label: "Bandung",
+        value: "Bandung",
+      }
+    ]
+  })
+
+  const [selectedOrigin, setSelectedOrigin] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedDate, setSelectedDate] = useState("");
 
   const handleCancel = {}
   const handleSave = {}
@@ -55,29 +81,27 @@ function AddShipment() {
         <h1>Add Shipment</h1>
         <FormRow>
           <Label htmlFor="origin">Origin</Label>
-          <Input
-            type="text"
-            value={origin}
+          <Select
+            onChange={(i) => setSelectedOrigin(i.value)}
             placeholder="Search district here"
-            onChange={(e) => setOrigin(e.target.value)}
+            options={origins.data}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="destination">Destination</Label>
-          <Input
-            type="text"
-            value={destination}
+          <Select
+            onChange={(i) => setSelectedDestination(i.value)}
             placeholder="Search district here"
-            onChange={(e) => setDestination(e.target.value)}
+            options={destinations.data}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="date">Loading Date</Label>
           <Input
             type="date"
-            value={date}
+            value={selectedDate}
             placeholder="13/08/2022"
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => setSelectedDate(e.target.value)}
           />
         </FormRow>
         <ButtonRow>
