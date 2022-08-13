@@ -113,6 +113,12 @@ function Drivers() {
       <Navbar />
       <Content>
         <Filter>
+          <button
+              style={{ marginRight: "10px" }}
+              onClick={() => location.assign("/transporter/trucks/add")}
+            >
+              Add Driver
+          </button>
           <div>
             <input
               type="text"
