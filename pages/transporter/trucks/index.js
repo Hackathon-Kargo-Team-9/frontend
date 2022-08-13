@@ -44,6 +44,19 @@ const TableContainer = styled.div`
   width: 100%;
 `;
 
+function Navbar() {
+  return (
+    <NavbarContainer>
+      <div>TMS</div>
+      <Links>
+        <Link href="/trucks">Trucks</Link>
+        <Link href="/drivers">Drivers</Link>
+      </Links>
+      <div>Logout</div>
+    </NavbarContainer>
+  );
+}
+
 function Trucks() {
   function onSelectAction(action, truck) {
     switch (action) {

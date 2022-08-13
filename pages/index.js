@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -43,6 +44,22 @@ const Img = styled.img`
 `;
 
 export default function Home() {
+  const [role, setRole] = useState("");
+
+  function handleChange(event) {
+    const {value} = event.target
+    setRole(value)
+}
+
+  function onClickRole() {
+    if(role == "Transporter") {
+      location.href = "/transporter/trucks"
+    }
+    else {
+      location.href = "/shipment"
+    }
+  }
+
   return (
     <Container>
       <Head>
@@ -58,19 +75,26 @@ export default function Home() {
           <InputRow>
             <input
               id="transporter"
-              value="transporter"
+              value="Transporter"
               name="user"
               type="radio"
+              onChange={handleChange}
             />
             Transporter
           </InputRow>
           <InputRow style={{ marginTop: "5px" }}>
-            <input id="Shipper" value="Shipper" name="user" type="radio" />
+            <input
+              id="Shipper"
+              value="Shipper"
+              name="user"
+              type="radio"
+              onChange={handleChange}
+            />
             Shipper
           </InputRow>
         </Radio>
       </Container2>
-      <button>LOGIN</button>
+      <button onClick={onClickRole}>LOGIN</button>
     </Container>
   );
 }
