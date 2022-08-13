@@ -93,7 +93,7 @@ function AddTrucks() {
             options={[
               {
                 label: "Tronton",
-                value: "Tronnton",
+                value: "Tronton",
               },
               {
                 label: "Container",
