@@ -57,7 +57,19 @@ function Trucks() {
   }
 
   function updateStatus(truck) {
-    console.log("change status to negate ", truck.status);
+    axios
+      .put(
+        `https://backend-hackathon-kargo-team9.herokuapp.com/truck/${truck.id}/`,
+        {
+          plate_number: truck.plate_number,
+          plate_type: truck.plate_type,
+          truck_type: truck.truck_type,
+          production_year: parseInt(truck.production_year),
+          status: truck.status === "Active" ? "Inactive" : "Active",
+        }
+      )
+      .then((res) => location.reload())
+      .catch((err) => alert("Gagal mengubah status truck"));
   }
 
   function changeDetail(truck) {
@@ -87,7 +99,9 @@ function Trucks() {
   const columns = [
     {
       name: "License Number",
-      selector: (row) => row.plate_number,
+      cell: (row) => (
+        <Link href={`/transporter/trucks/${row.id}`}>{row.plate_number}</Link>
+      ),
     },
     {
       name: "Truck Type",
@@ -109,6 +123,7 @@ function Trucks() {
       name: "",
       cell: (row) => (
         <Select
+          placeholder="Update"
           options={row.status === "Active" ? options_active : options_deactive}
           onChange={(i) => onSelectAction(i.value, row)}
         />
