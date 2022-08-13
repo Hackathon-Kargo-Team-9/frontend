@@ -25,8 +25,10 @@ const Container = styled.div`
   width: 100%;
   background-color: var(--light);
   color: var(--darkgrey);
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
+  overflow: auto;
+  padding: 20px;
 `;
 
 const NavbarContainer = styled.nav`
@@ -51,6 +53,7 @@ const Filter = styled.div`
 
 const TableContainer = styled.div`
   margin-top: 20px;
+  min-height: 100vh;
 `;
 
 function Navbar() {
@@ -67,6 +70,43 @@ function Navbar() {
 }
 
 function Trucks() {
+  function onSelectAction(action, truck) {
+    switch (action) {
+      case "update status":
+        updateStatus(truck);
+        break;
+      case "change detail":
+        changeDetail(truck);
+        break;
+    }
+  }
+  function updateStatus(truck) {
+    console.log("change status to negate ", truck.status);
+  }
+  function changeDetail(truck) {
+    console.log("edit ", truck.licence_number);
+    location.href = "/transporter/trucks/edit/" + truck.license_number;
+  }
+  const options_active = [
+    {
+      label: "Change Detail",
+      value: "change detail",
+    },
+    {
+      label: "Deactivate Unit",
+      value: "update status",
+    },
+  ];
+  const options_deactive = [
+    {
+      label: "Change Detail",
+      value: "change detail",
+    },
+    {
+      label: "Activate Unit",
+      value: "update status",
+    },
+  ];
   const columns = [
     {
       name: "License Number",
@@ -85,7 +125,17 @@ function Trucks() {
       selector: (row) => row.prod_year,
     },
     {
+      name: "Status",
+      selector: (row) => row.status,
+    },
+    {
       name: "",
+      cell: (row) => (
+        <Select
+          options={row.status === "Active" ? options_active : options_deactive}
+          onChange={(i) => onSelectAction(i.value, row)}
+        />
+      ),
     },
   ];
 
@@ -95,12 +145,35 @@ function Trucks() {
       truck_type: "Tronton",
       plate_type: "Black",
       prod_year: "2022",
+      status: "Active",
     },
     {
       license_number: "B 1234 AHS",
       truck_type: "Tronton",
       plate_type: "Black",
       prod_year: "2022",
+      status: "Inctive",
+    },
+    {
+      license_number: "B 1234 AHS",
+      truck_type: "Tronton",
+      plate_type: "Black",
+      prod_year: "2022",
+      status: "Inctive",
+    },
+    {
+      license_number: "B 1234 AHS",
+      truck_type: "Tronton",
+      plate_type: "Black",
+      prod_year: "2022",
+      status: "Inctive",
+    },
+    {
+      license_number: "B 1234 AHS",
+      truck_type: "Tronton",
+      plate_type: "Black",
+      prod_year: "2022",
+      status: "Inctive",
     },
   ];
 
@@ -116,7 +189,7 @@ function Trucks() {
       <Filter>
         <div>
           <Select
-            onChange={(i) => setSelectedTruckType(i.value)}
+            onChange={(n) => setSelectedTruckType(n.value)}
             options={TRUCK_TYPES}
           />
         </div>
