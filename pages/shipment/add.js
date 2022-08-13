@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Select from "react-select";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -43,37 +44,61 @@ const ButtonRow = styled.div`
 
 function AddShipment() {
 
-  const [origins, setOrigins] = useState({
-    data: [
-      {
-        label: "Jakarta",
-        value: "Jakarta",
-      },
-      {
-        label: "Bandung",
-        value: "Bandung",
-      }
-    ]
-  })
-  const [destinations, setDestinations] = useState({
-    data: [
-      {
-        label: "Jakarta",
-        value: "Jakarta",
-      },
-      {
-        label: "Bandung",
-        value: "Bandung",
-      }
-    ]
-  })
+  const [districts, setDistricts] = useState([])
 
   const [selectedOrigin, setSelectedOrigin] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
 
-  const handleCancel = {}
-  const handleSave = {}
+  const handleCancel = () =>{
+    console.log(parseResponse())
+  }
+  const handleSave = () =>{
+    console.log(districts)
+  }
+
+  function parseResponse() {
+    return districts.map(it => {
+      return { label : it.nama,  value: it.nama }
+    })
+  }
+
+  function fetchCity() {
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=31")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=33")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=34")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=35")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=36")
+      .then((res) =>
+        setDistricts((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+  }
+
+  useEffect(() => {
+    fetchCity();
+  }, []);
 
   return (
     <Container>
@@ -84,7 +109,7 @@ function AddShipment() {
           <Select
             onChange={(i) => setSelectedOrigin(i.value)}
             placeholder="Search district here"
-            options={origins.data}
+            options={parseResponse()}
           />
         </FormRow>
         <FormRow>
@@ -92,7 +117,7 @@ function AddShipment() {
           <Select
             onChange={(i) => setSelectedDestination(i.value)}
             placeholder="Search district here"
-            options={destinations.data}
+            options={parseResponse(districts)}
           />
         </FormRow>
         <FormRow>
