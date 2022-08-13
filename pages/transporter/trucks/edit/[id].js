@@ -119,7 +119,7 @@ function EditTruck() {
             onInput={(e) => setProductionYear(e.target.value)}
           />
         </FormRow>
-        <button onClick={() => submitEdit()}>Edit</button>
+        <button onClick={() => submitEdit()}>Save Unit</button>
       </Form>
     </Container>
   );
