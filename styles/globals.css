@@ -42,6 +42,13 @@ p.notes {
   font-size: 12px;
 }
 
+input {
+  padding: 5px 10px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid var(--grey);
+}
+
 button {
   outline: none;
   border: none;
