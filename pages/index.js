@@ -1,3 +1,4 @@
+import Head from "next/head";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -44,6 +45,9 @@ const Img = styled.img`
 export default function Home() {
   return (
     <Container>
+      <Head>
+        <title>Transportation Management System</title>
+      </Head>
       <Img
         src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1772&q=80"
         alt="gudang"
