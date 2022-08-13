@@ -61,8 +61,16 @@ function EditShipment() {
   ]
   const [selectedStatus, setSelectedStatus] = useState("")
 
-  const handleCancel = {}
-  const handleUpdate = {}
+  const handleCancel = () => {
+    window.history.back()
+  }
+  const handleUpdate = () => {
+    if (selectedStatus == "") {
+      alert("Failed")
+    } else {
+      alert("Success")
+    }
+  }
 
   return (
     <Container>
@@ -77,8 +85,8 @@ function EditShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleUpdate}>Update</button>
+          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
+          <button style={{width:"100%"}} onClick={handleUpdate}>Update</button>
         </ButtonRow>
       </Form>
     </Container>

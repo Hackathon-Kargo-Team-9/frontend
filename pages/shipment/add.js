@@ -46,15 +46,19 @@ function AddShipment() {
 
   const [districts, setDistricts] = useState([])
 
-  const [selectedOrigin, setSelectedOrigin] = useState(null);
-  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedOrigin, setSelectedOrigin] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
-  const handleCancel = () =>{
-    console.log(parseResponse())
+  const handleCancel = () => {
+    window.history.back()
   }
-  const handleSave = () =>{
-    console.log(districts)
+  const handleSave = () => {
+    if (selectedOrigin == "" && selectedDestination == "" && selectedDate == "") {
+      alert("Failed")
+    } else {
+      alert("Success")
+    }
   }
 
   function parseResponse() {
@@ -130,8 +134,8 @@ function AddShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button onClick={handleCancel}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
+          <button style={{width:"100%"}} onClick={handleSave}>Save</button>
         </ButtonRow>
       </Form>
     </Container>
