@@ -2,6 +2,23 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
+import Select from "react-select";
+import Head from "next/head";
+
+const TRUCK_TYPES = [
+  {
+    label: "Tronton",
+    value: "Tronton",
+  },
+  {
+    label: "Container",
+    value: "Container",
+  },
+  {
+    label: "CDE",
+    value: "CDE",
+  },
+];
 
 const Container = styled.div`
   min-height: 100vh;
@@ -88,11 +105,21 @@ function Trucks() {
   ];
 
   const [search, setSearch] = useState("");
+  const [selectedTruckType, setSelectedTruckType] = useState(null);
+
   return (
     <Container>
+      <Head>
+        <title>Trucks</title>
+      </Head>
       <Navbar />
       <Filter>
-        <div>filter truck</div>
+        <div>
+          <Select
+            onChange={(i) => setSelectedTruckType(i.value)}
+            options={TRUCK_TYPES}
+          />
+        </div>
         <div>
           <input
             type="text"
