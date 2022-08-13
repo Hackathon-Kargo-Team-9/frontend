@@ -1,7 +1,9 @@
 :root {
   --blue: #008eff;
   --dark: #000000;
+  --light: #ffffff;
   --darkgrey: #212529;
+  --grey: #999999;
 }
 
 html,
@@ -19,14 +21,4 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
 }
