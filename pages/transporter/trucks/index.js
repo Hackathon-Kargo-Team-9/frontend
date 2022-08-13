@@ -81,13 +81,15 @@ function Trucks() {
         break;
     }
   }
+
   function updateStatus(truck) {
     console.log("change status to negate ", truck.status);
   }
+
   function changeDetail(truck) {
-    console.log("edit ", truck.licence_number);
-    location.href = "/transporter/trucks/edit/" + truck.license_number;
+    location.href = "/transporter/trucks/edit/" + truck.id;
   }
+
   const options_active = [
     {
       label: "Change Detail",
@@ -111,7 +113,7 @@ function Trucks() {
   const columns = [
     {
       name: "License Number",
-      selector: (row) => row.license_number,
+      selector: (row) => row.plate_number,
     },
     {
       name: "Truck Type",
@@ -123,7 +125,7 @@ function Trucks() {
     },
     {
       name: "Production Year",
-      selector: (row) => row.prod_year,
+      selector: (row) => row.production_year,
     },
     {
       name: "Status",
@@ -140,72 +142,20 @@ function Trucks() {
     },
   ];
 
-  const data = [
-    {
-      license_number: "B 1234 CDE",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Active",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-  ];
-
   const [search, setSearch] = useState("");
   const [selectedTruckType, setSelectedTruckType] = useState(null);
-  const [cities, setCities] = useState([]);
+  const [trucks, setTrucks] = useState([]);
 
-  function fetchCity() {
+  function fetchTrucks() {
     axios
-      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=31")
-      .then((res) =>
-        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
-      );
-    axios
-      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32")
-      .then((res) =>
-        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
-      );
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=33")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=34")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=35")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/truck/")
+      .then((res) => {
+        setTrucks(res.data);
+      });
   }
 
   useEffect(() => {
-    fetchCity();
+    fetchTrucks();
   }, []);
 
   return (
@@ -224,13 +174,14 @@ function Trucks() {
         <div>
           <input
             type="text"
+            placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
       </Filter>
       <TableContainer>
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={trucks} />
       </TableContainer>
     </Container>
   );

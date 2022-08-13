@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import Select from "react-select";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -34,11 +36,28 @@ const Input = styled.input`
   padding: 5px 10px;
 `;
 
+const CustomSelect = styled(Select)`
+  width: 100%;
+`;
+
 function AddTrucks() {
-  const [licenseNumber, setLicenseNumber] = useState("");
-  const [licenseType, setLicenseType] = useState("");
+  const [plateNumber, setPlateNumber] = useState("");
+  const [plateType, setPlateType] = useState("");
   const [truckType, setTruckType] = useState("");
   const [productionYear, setProductionYear] = useState("");
+
+  function onSubmit() {
+    axios
+      .post("https://backend-hackathon-kargo-team9.herokuapp.com/truck/", {
+        plate_number: plateNumber,
+        plate_type: plateType,
+        truck_type: truckType,
+        production_year: parseInt(productionYear),
+        status: "Active",
+      })
+      .then((res) => (location.href = "/transporter/trucks"))
+      .catch((err) => console.log(err));
+  }
 
   return (
     <Container>
@@ -48,24 +67,48 @@ function AddTrucks() {
           <Label htmlFor="license">License Number</Label>
           <Input
             type="text"
-            value={licenseNumber}
-            onChange={(e) => setLicenseNumber(e.target.value)}
+            value={plateNumber}
+            onChange={(e) => setPlateNumber(e.target.value)}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="license">License Type</Label>
-          <Input
-            type="text"
-            value={licenseType}
-            onChange={(e) => setLicenseType(e.target.value)}
+          <CustomSelect
+            options={[
+              {
+                label: "Black",
+                value: "Black",
+              },
+              {
+                label: "Yellow",
+                value: "Yellow",
+              },
+            ]}
+            onChange={(item) => setPlateType(item.value)}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="license">Truck Type</Label>
-          <Input
-            type="text"
-            value={truckType}
-            onChange={(e) => setTruckType(e.target.value)}
+          <CustomSelect
+            options={[
+              {
+                label: "Tronton",
+                value: "Tronnton",
+              },
+              {
+                label: "Container",
+                value: "Container",
+              },
+              {
+                label: "CDE",
+                value: "CDE",
+              },
+              {
+                label: "Pickup",
+                value: "Pickup",
+              },
+            ]}
+            onChange={(item) => setTruckType(item.value)}
           />
         </FormRow>
         <FormRow>
@@ -76,7 +119,7 @@ function AddTrucks() {
             onChange={(e) => setProductionYear(e.target.value)}
           />
         </FormRow>
-        <button>submit</button>
+        <button onClick={() => onSubmit()}>submit</button>
       </Form>
     </Container>
   );
