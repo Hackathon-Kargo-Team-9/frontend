@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Select from "react-select";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -42,8 +43,33 @@ const ButtonRow = styled.div`
 
 function AllocateShipment() {
 
-  const [truck, setTruck] = useState("");
-  const [driver, setDriver] = useState("");
+  const [trucks, setTrucks] = useState({
+    data: [
+      {
+        label: "Tronton",
+        value: "Tronton",
+      },
+      {
+        label: "Container",
+        value: "Container",
+      }
+    ]
+  })
+  const [drivers, setDrivers] = useState({
+    data: [
+      {
+        label: "Damar",
+        value: "Damar",
+      },
+      {
+        label: "Irfan",
+        value: "Irfan",
+      }
+    ]
+  })
+
+  const [selectedTruck, setSelectedTruck] = useState(null);
+  const [selectedDriver, setSelectedDriver] = useState(null);
 
   const handleCancel = {}
   const handleAllocate = {}
@@ -51,21 +77,21 @@ function AllocateShipment() {
   return (
     <Container>
       <Form>
-        <h1>Edit Truck</h1>
+        <h1>Allocate Shipment</h1>
         <FormRow>
           <Label htmlFor="truck">Truck</Label>
-          <Input
-            type="text"
-            value={truck}
-            onChange={(e) => setTruck(e.target.value)}
+          <Select
+            onChange={(i) => setSelectedTruck(i.value)}
+            placeholder="Search truck here"
+            options={trucks.data}
           />
         </FormRow>
         <FormRow>
           <Label htmlFor="driver">Driver</Label>
-          <Input
-            type="text"
-            value={driver}
-            onChange={(e) => setDriver(e.target.value)}
+          <Select
+            onChange={(i) => setSelectedDriver(i.value)}
+            placeholder="Search driver here"
+            options={drivers.data}
           />
         </FormRow>
         <ButtonRow>
