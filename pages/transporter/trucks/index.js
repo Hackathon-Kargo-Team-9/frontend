@@ -6,6 +6,9 @@ import Select from "react-select";
 import Head from "next/head";
 import axios from "axios";
 
+import Navbar from "../../../components/Navbar";
+import Content from "../../../components/Content";
+
 const TRUCK_TYPES = [
   {
     label: "Tronton",
@@ -26,24 +29,8 @@ const Container = styled.div`
   width: 100%;
   background-color: var(--light);
   color: var(--darkgrey);
-  max-width: 1000px;
   margin: 0 auto;
   overflow: auto;
-  padding: 20px;
-`;
-
-const NavbarContainer = styled.nav`
-  height: 80px;
-  border-bottom: 1px solid var(--grey);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Links = styled.div`
-  display: flex;
-  gap: 20px;
 `;
 
 const Filter = styled.div`
@@ -54,21 +41,8 @@ const Filter = styled.div`
 
 const TableContainer = styled.div`
   margin-top: 20px;
-  min-height: 100vh;
+  width: 100%;
 `;
-
-function Navbar() {
-  return (
-    <NavbarContainer>
-      <div>TMS</div>
-      <Links>
-        <Link href="/trucks">Trucks</Link>
-        <Link href="/drivers">Drivers</Link>
-      </Links>
-      <div>Logout</div>
-    </NavbarContainer>
-  );
-}
 
 function Trucks() {
   function onSelectAction(action, truck) {
@@ -164,25 +138,33 @@ function Trucks() {
         <title>Trucks</title>
       </Head>
       <Navbar />
-      <Filter>
-        <div>
-          <Select
-            onChange={(n) => setSelectedTruckType(n.value)}
-            options={TRUCK_TYPES}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            placeholder="Search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </Filter>
-      <TableContainer>
-        <DataTable columns={columns} data={trucks} />
-      </TableContainer>
+      <Content>
+        <Filter>
+          <div>
+            <Select
+              onChange={(n) => setSelectedTruckType(n.value)}
+              options={TRUCK_TYPES}
+            />
+          </div>
+          <div>
+            <button
+              style={{ marginRight: "10px" }}
+              onClick={() => location.assign("/transporter/trucks/add")}
+            >
+              Add Truck
+            </button>
+            <input
+              type="text"
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </Filter>
+        <TableContainer>
+          <DataTable columns={columns} data={trucks} />
+        </TableContainer>
+      </Content>
     </Container>
   );
 }
