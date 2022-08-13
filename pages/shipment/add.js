@@ -50,14 +50,23 @@ function AddShipment() {
   const [selectedDestination, setSelectedDestination] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
+  function onSubmit() {
+    axios
+      .post("https://backend-hackathon-kargo-team9.herokuapp.com/shipment/", {
+        // HANDLE BODY
+      })
+      .then((res) => (location.href = "/shipment/"))
+      .catch((err) => console.log(err));
+  }
+
   const handleCancel = () => {
     window.history.back()
   }
   const handleSave = () => {
     if (selectedOrigin == "" && selectedDestination == "" && selectedDate == "") {
-      alert("Failed")
+      alert("Field tidak boleh kosong")
     } else {
-      alert("Success")
+      onSubmit()
     }
   }
 
