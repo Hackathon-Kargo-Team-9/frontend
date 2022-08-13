@@ -81,12 +81,15 @@ function Trucks() {
         break;
     }
   }
+
   function updateStatus(truck) {
     console.log("change status to negate ", truck.status);
   }
+
   function changeDetail(truck) {
     location.href = "/transporter/trucks/edit/" + truck.id;
   }
+
   const options_active = [
     {
       label: "Change Detail",
@@ -171,6 +174,7 @@ function Trucks() {
         <div>
           <input
             type="text"
+            placeholder="Search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
