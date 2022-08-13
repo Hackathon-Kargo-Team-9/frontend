@@ -1,7 +1,11 @@
-import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
+import Select from "react-select";
+import axios from "axios";
+
+import Navbar2 from "../../components/Navbar2";
+import Content from "../../components/Content";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -12,20 +16,6 @@ const Container = styled.div`
   margin: 0 auto;
   overflow: auto;
   padding: 20px;
-`;
-
-const NavbarContainer = styled.nav`
-  height: 80px;
-  border-bottom: 1px solid var(--grey);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Links = styled.div`
-  display: flex;
-  gap: 20px;
 `;
 
 const Search = styled.div`
@@ -41,31 +31,42 @@ const TableContainer = styled.div`
   min-height: 100vh;
 `;
 
-function Navbar() {
-  return (
-    <NavbarContainer>
-      <div>TMS</div>
-      <Links>
-        <Link href="/shipment">Shipment</Link>
-      </Links>
-      <div>Logout</div>
-    </NavbarContainer>
-  );
-}
-
 function Shipment() {
+
+  const options = [
+    {
+      label: "Allocate Shipment",
+      value: "Allocate Shipment",
+    },
+    {
+      label: "Update Status",
+      value: "Update Status",
+    },
+  ];
+
+  function onSelectAction(action) {
+    switch (action) {
+      case "Allocate Shipment":
+        location.href = "/shipment/allocate/"
+        break;
+      case "Update Status":
+        location.href = "/shipment/edit/"
+        break;
+    }
+  }
+
   const columns = [
     {
       name: "Shipment",
-      selector: (row) => row.shipment,
+      selector: (row) => row.id,
     },
     {
       name: "License",
-      selector: (row) => row.license,
+      selector: (row) => row.license_number,
     },
     {
       name: "Driver\'s Name",
-      selector: (row) => row.driver,
+      selector: (row) => "",
     },
     {
       name: "Origin",
@@ -77,7 +78,7 @@ function Shipment() {
     },
     {
       name: "Loading Date",
-      selector: (row) => row.date,
+      selector: (row) => row.loading_date,
     },
     {
       name: "Status",
@@ -85,75 +86,54 @@ function Shipment() {
     },
     {
       name: "Action",
-      selector: (row) => row.action,
+      cell: (row) => (
+        <Select
+          options={options}
+          onChange={(i) => onSelectAction(i.value, row)}
+        />
+      ),
     },
   ];
 
-  const data = [
-    {
-      shipment: "S1",
-      license: "B 1111 B",
-      driver: "D1",
-      origin: "Jakarta",
-      destination: "Surabaya",
-      date: "1 Januari 2022",
-      status: "Allocated",
-      action: "-"
-    },
-    {
-      shipment: "S1",
-      license: "B 1111 B",
-      driver: "D1",
-      origin: "Jakarta",
-      destination: "Surabaya",
-      date: "1 Januari 2022",
-      status: "Allocated",
-      action: "-"
-    },
-    {
-      shipment: "S1",
-      license: "B 1111 B",
-      driver: "D1",
-      origin: "Jakarta",
-      destination: "Surabaya",
-      date: "1 Januari 2022",
-      status: "Allocated",
-      action: "-"
-    },
-    {
-      shipment: "S1",
-      license: "B 1111 B",
-      driver: "D1",
-      origin: "Jakarta",
-      destination: "Surabaya",
-      date: "1 Januari 2022",
-      status: "Allocated",
-      action: "-"
-    },
-  ];
 
   const [search, setSearch] = useState("");
+  const [selectedShipment, setSelectedShipment] = useState(null);
+  const [shipment, setShipment] = useState([]);
 
   const handleAddShipment = () => {
     window.location.assign("/shipment/add")
   }
 
+  function fetchTrucks() {
+    axios
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/shipment/")
+      .then((res) => {
+        setShipment(res.data);
+      });
+  }
+
+  useEffect(() => {
+    fetchTrucks();
+  }, []);
+
   return (
     <Container>
-      <Navbar />
-      <Search>
-        <button onClick={handleAddShipment}>Add Shipment</button>
-        <div>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </Search>
-      <TableContainer>
-        <DataTable columns={columns} data={data} />
-      </TableContainer>
+      <Navbar2 />
+      <Content>
+        <Search>
+          <button onClick={handleAddShipment}>Add Shipment</button>
+          <div>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </Search>
+        <TableContainer>
+          <DataTable columns={columns} data={shipment} />
+        </TableContainer>
+      </Content>
     </Container>
   );
 }

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Select from "react-select";
+import axios from "axios";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -37,30 +38,8 @@ const ButtonRow = styled.div`
 
 function AllocateShipment() {
 
-  const [trucks, setTrucks] = useState({
-    data: [
-      {
-        label: "Tronton",
-        value: "Tronton",
-      },
-      {
-        label: "Container",
-        value: "Container",
-      }
-    ]
-  })
-  const [drivers, setDrivers] = useState({
-    data: [
-      {
-        label: "Damar",
-        value: "Damar",
-      },
-      {
-        label: "Irfan",
-        value: "Irfan",
-      }
-    ]
-  })
+  const [trucks, setTrucks] = useState([])
+  const [drivers, setDrivers] = useState([])
 
   const [selectedTruck, setSelectedTruck] = useState("");
   const [selectedDriver, setSelectedDriver] = useState("");
@@ -76,6 +55,39 @@ function AllocateShipment() {
     }
   }
 
+  function parseTruck() {
+    return trucks.map(it => {
+      return { label : it.plate_number,  value: it.plate_number }
+    })
+  }
+
+  function parseDriver() {
+    return drivers.map(it => {
+      return { label : it.name,  value: it.name }
+    })
+  }
+
+  function fetchTrucks() {
+    axios
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/truck/")
+      .then((res) => {
+        setTrucks(res.data);
+      });
+  }
+
+  function fetchDrivers() {
+    axios
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/driver/")
+      .then((res) => {
+        setDrivers(res.data);
+      });
+  }
+
+  useEffect(() => {
+    fetchTrucks();
+    fetchDrivers();
+  }, []);
+
   return (
     <Container>
       <Form>
@@ -85,7 +97,7 @@ function AllocateShipment() {
           <Select
             onChange={(i) => setSelectedTruck(i.value)}
             placeholder="Search truck here"
-            options={trucks.data}
+            options={parseTruck()}
           />
         </FormRow>
         <FormRow>
@@ -93,7 +105,7 @@ function AllocateShipment() {
           <Select
             onChange={(i) => setSelectedDriver(i.value)}
             placeholder="Search driver here"
-            options={drivers.data}
+            options={parseDriver()}
           />
         </FormRow>
         <ButtonRow>
