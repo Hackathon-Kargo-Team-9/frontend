@@ -62,8 +62,8 @@ function Navbar() {
     <NavbarContainer>
       <div>TMS</div>
       <Links>
-        <Link href="/trucks">Trucks</Link>
-        <Link href="/drivers">Drivers</Link>
+        <Link href="/transporter/trucks">Trucks</Link>
+        <Link href="/transporter/drivers">Drivers</Link>
       </Links>
       <div>Logout</div>
     </NavbarContainer>
