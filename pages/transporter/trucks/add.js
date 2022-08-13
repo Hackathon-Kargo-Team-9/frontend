@@ -114,12 +114,12 @@ function AddTrucks() {
         <FormRow>
           <Label htmlFor="license">Production Year</Label>
           <Input
-            type="text"
+            type="number"
             value={productionYear}
             onChange={(e) => setProductionYear(e.target.value)}
           />
         </FormRow>
-        <button onClick={() => onSubmit()}>submit</button>
+        <button onClick={() => onSubmit()}>Submit</button>
       </Form>
     </Container>
   );
