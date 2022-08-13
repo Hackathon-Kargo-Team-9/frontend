@@ -23,7 +23,7 @@ const Search = styled.div`
   justify-content: end;
   align-items: center;
   margin-top: 20px;
-  gap: 48px
+  gap: 48px;
 `;
 
 const TableContainer = styled.div`
@@ -104,7 +104,7 @@ function Shipment() {
     window.location.assign("/shipment/add")
   }
 
-  function fetchTrucks() {
+  function fetchShipments() {
     axios
       .get("https://backend-hackathon-kargo-team9.herokuapp.com/shipment/")
       .then((res) => {
@@ -113,8 +113,13 @@ function Shipment() {
   }
 
   useEffect(() => {
-    fetchTrucks();
+    fetchShipments();
   }, []);
+
+  function filterredShipments() {
+    // return shipment.filter((shipment) => {});
+    return shipment
+  }
 
   return (
     <Container>
@@ -126,12 +131,13 @@ function Shipment() {
             <input
               type="text"
               value={search}
+              placeholder="search"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
         </Search>
         <TableContainer>
-          <DataTable columns={columns} data={shipment} />
+          <DataTable columns={columns} data={filterredShipments()} />
         </TableContainer>
       </Content>
     </Container>

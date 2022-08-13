@@ -53,7 +53,9 @@ function AddShipment() {
   function onSubmit() {
     axios
       .post("https://backend-hackathon-kargo-team9.herokuapp.com/shipment/", {
-        // HANDLE BODY
+        origin: selectedOrigin,
+        destination: selectedDestination,
+        loading_date: selectedDate
       })
       .then((res) => (location.href = "/shipment/"))
       .catch((err) => console.log(err));
@@ -72,7 +74,7 @@ function AddShipment() {
 
   function parseResponse() {
     return districts.map(it => {
-      return { label : it.nama,  value: it.nama }
+      return { label: it.nama, value: it.nama }
     })
   }
 
@@ -143,8 +145,8 @@ function AddShipment() {
           />
         </FormRow>
         <ButtonRow>
-          <button style={{backgroundColor:"gray", width:"100%"}} onClick={handleCancel}>Cancel</button>
-          <button style={{width:"100%"}} onClick={handleSave}>Save</button>
+          <button style={{ backgroundColor: "gray", width: "100%" }} onClick={handleCancel}>Cancel</button>
+          <button style={{ width: "100%" }} onClick={handleSave}>Save</button>
         </ButtonRow>
       </Form>
     </Container>
