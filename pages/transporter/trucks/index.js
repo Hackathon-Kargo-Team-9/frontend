@@ -1,9 +1,10 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DataTable from "react-data-table-component";
 import Select from "react-select";
 import Head from "next/head";
+import axios from "axios";
 
 const TRUCK_TYPES = [
   {
@@ -179,6 +180,33 @@ function Trucks() {
 
   const [search, setSearch] = useState("");
   const [selectedTruckType, setSelectedTruckType] = useState(null);
+  const [cities, setCities] = useState([]);
+
+  function fetchCity() {
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=31")
+      .then((res) =>
+        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    axios
+      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32")
+      .then((res) =>
+        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
+      );
+    // axios
+    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=33")
+    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
+    // axios
+    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=34")
+    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
+    // axios
+    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=35")
+    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
+  }
+
+  useEffect(() => {
+    fetchCity();
+  }, []);
 
   return (
     <Container>
