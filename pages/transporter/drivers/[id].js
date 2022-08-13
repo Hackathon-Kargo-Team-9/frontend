@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Head from "next/head";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -34,20 +35,25 @@ const Input = styled.input`
   padding: 5px 10px;
 `;
 
-function AddDrivers() {
-  const [driverName, setDriverName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+function DetailDrivers() {
+  const [driverName, setDriverName] = useState("Jake");
+  const [phoneNumber, setPhoneNumber] = useState("+62819182");
+  const [createdAt, setCreatedAt] = useState("2 August 2020");
+  const [status, setStatus] = useState("Active");
 
   return (
     <Container>
+      <Head>
+        <title>Truck Detail</title>
+      </Head>
       <Form>
-        <h1>Add Driver</h1>
+        <h1>Detail Driver</h1>
         <FormRow>
           <Label htmlFor="name">Driver Name</Label>
           <Input
             type="text"
             value={driverName}
-            onChange={(e) => setDriverName(e.target.value)}
+            disabled
           />
         </FormRow>
         <FormRow>
@@ -55,13 +61,28 @@ function AddDrivers() {
           <Input
             type="text"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            disabled
           />
         </FormRow>
-        <button>Save Driver</button>
+        <FormRow>
+          <Label htmlFor="createdAt">Created At</Label>
+          <Input
+            type="text"
+            value={createdAt}
+            disabled
+          />
+        </FormRow>
+        <FormRow>
+          <Label htmlFor="status">Status</Label>
+          <Input
+            type="text"
+            value={status}
+            disabled
+          />
+        </FormRow>
       </Form>
     </Container>
   );
 }
 
-export default AddDrivers;
+export default DetailDrivers;
