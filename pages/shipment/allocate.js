@@ -62,11 +62,19 @@ function AllocateShipment() {
     ]
   })
 
-  const [selectedTruck, setSelectedTruck] = useState(null);
-  const [selectedDriver, setSelectedDriver] = useState(null);
+  const [selectedTruck, setSelectedTruck] = useState("");
+  const [selectedDriver, setSelectedDriver] = useState("");
 
-  const handleCancel = {}
-  const handleAllocate = {}
+  const handleCancel = () => {
+    window.history.back()
+  }
+  const handleAllocate = () => {
+    if (selectedTruck == "" && selectedDriver == "") {
+      alert("Failed")
+    } else {
+      alert("Success")
+    }
+  }
 
   return (
     <Container>

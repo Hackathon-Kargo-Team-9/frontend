@@ -134,7 +134,9 @@ function Shipment() {
 
   const [search, setSearch] = useState("");
 
-  const handleAddShipment = {}
+  const handleAddShipment = () => {
+    window.location.assign("/shipment/add")
+  }
 
   return (
     <Container>

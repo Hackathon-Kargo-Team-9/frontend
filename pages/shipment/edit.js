@@ -61,8 +61,16 @@ function EditShipment() {
   ]
   const [selectedStatus, setSelectedStatus] = useState("")
 
-  const handleCancel = {}
-  const handleUpdate = {}
+  const handleCancel = () => {
+    window.history.back()
+  }
+  const handleUpdate = () => {
+    if (selectedStatus == "") {
+      alert("Failed")
+    } else {
+      alert("Success")
+    }
+  }
 
   return (
     <Container>

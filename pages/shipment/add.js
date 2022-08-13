@@ -46,15 +46,19 @@ function AddShipment() {
 
   const [districts, setDistricts] = useState([])
 
-  const [selectedOrigin, setSelectedOrigin] = useState(null);
-  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedOrigin, setSelectedOrigin] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
 
-  const handleCancel = () =>{
-    console.log(parseResponse())
+  const handleCancel = () => {
+    window.history.back()
   }
-  const handleSave = () =>{
-    console.log(districts)
+  const handleSave = () => {
+    if (selectedOrigin == "" && selectedDestination == "" && selectedDate == "") {
+      alert("Failed")
+    } else {
+      alert("Success")
+    }
   }
 
   function parseResponse() {
