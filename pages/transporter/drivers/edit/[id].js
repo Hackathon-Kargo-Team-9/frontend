@@ -35,17 +35,17 @@ const Input = styled.input`
   padding: 5px 10px;
 `;
 
-function AddDrivers() {
+function EditDrivers() {
   const [driverName, setDriverName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   return (
     <Container>
       <Head>
-        <title>Add Driver</title>
+        <title>Edit Driver</title>
       </Head>
       <Form>
-        <h1>Add Driver</h1>
+        <h1>Edit Driver</h1>
         <FormRow>
           <Label htmlFor="name">Driver Name</Label>
           <Input
@@ -68,4 +68,4 @@ function AddDrivers() {
   );
 }
 
-export default AddDrivers;
+export default EditDrivers;
