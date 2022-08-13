@@ -1,9 +1,11 @@
 :root {
   --blue: #008eff;
   --dark: #000000;
-  --light: #ffffff;
   --darkgrey: #212529;
+  --softgrey: #f0f3f5;
   --grey: #999999;
+  --light: #ffffff;
+  --navheight: 80px;
 }
 
 html,
@@ -21,4 +23,39 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+p {
+  font-size: 14px;
+}
+
+p.notes {
+  font-size: 12px;
+}
+
+input {
+  padding: 5px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid var(--grey);
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: var(--blue);
+  padding: 1em 2em;
+  border-radius: 10px;
+  color: var(--light);
+  font-size: 14px;
+  cursor: pointer;
 }
