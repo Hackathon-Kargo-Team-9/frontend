@@ -14,7 +14,7 @@ const Container2 = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 40px;
   border: 1px solid var(--grey);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
@@ -70,7 +70,7 @@ export default function Home() {
         alt="gudang"
       />
       <Container2>
-        <p>Role</p>
+        <p style={{ marginRight: "20px" }}>Login as</p>
         <Radio>
           <InputRow>
             <input
