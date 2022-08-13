@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -13,7 +14,7 @@ const Container2 = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 30px;
-  padding: 20px;
+  padding: 40px;
   border: 1px solid var(--grey);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
@@ -43,6 +44,22 @@ const Img = styled.img`
 `;
 
 export default function Home() {
+  const [role, setRole] = useState("");
+
+  function handleChange(event) {
+    const {value} = event.target
+    setRole(value)
+}
+
+  function onClickRole() {
+    if(role == "Transporter") {
+      location.href = "/transporter/trucks"
+    }
+    else {
+      location.href = "/shipment"
+    }
+  }
+
   return (
     <Container>
       <Head>
@@ -53,24 +70,31 @@ export default function Home() {
         alt="gudang"
       />
       <Container2>
-        <p>Role</p>
+        <p style={{ marginRight: "20px" }}>Login as</p>
         <Radio>
           <InputRow>
             <input
               id="transporter"
-              value="transporter"
+              value="Transporter"
               name="user"
               type="radio"
+              onChange={handleChange}
             />
             Transporter
           </InputRow>
           <InputRow style={{ marginTop: "5px" }}>
-            <input id="Shipper" value="Shipper" name="user" type="radio" />
+            <input
+              id="Shipper"
+              value="Shipper"
+              name="user"
+              type="radio"
+              onChange={handleChange}
+            />
             Shipper
           </InputRow>
         </Radio>
       </Container2>
-      <button>LOGIN</button>
+      <button onClick={onClickRole}>LOGIN</button>
     </Container>
   );
 }

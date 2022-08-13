@@ -6,6 +6,9 @@ import Select from "react-select";
 import Head from "next/head";
 import axios from "axios";
 
+import Navbar from "../../../components/Navbar";
+import Content from "../../../components/Content";
+
 const TRUCK_TYPES = [
   {
     label: "Tronton",
@@ -26,24 +29,8 @@ const Container = styled.div`
   width: 100%;
   background-color: var(--light);
   color: var(--darkgrey);
-  max-width: 1000px;
   margin: 0 auto;
   overflow: auto;
-  padding: 20px;
-`;
-
-const NavbarContainer = styled.nav`
-  height: 80px;
-  border-bottom: 1px solid var(--grey);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Links = styled.div`
-  display: flex;
-  gap: 20px;
 `;
 
 const Filter = styled.div`
@@ -54,21 +41,8 @@ const Filter = styled.div`
 
 const TableContainer = styled.div`
   margin-top: 20px;
-  min-height: 100vh;
+  width: 100%;
 `;
-
-function Navbar() {
-  return (
-    <NavbarContainer>
-      <div>TMS</div>
-      <Links>
-        <Link href="/trucks">Trucks</Link>
-        <Link href="/drivers">Drivers</Link>
-      </Links>
-      <div>Logout</div>
-    </NavbarContainer>
-  );
-}
 
 function Trucks() {
   function onSelectAction(action, truck) {
@@ -81,13 +55,15 @@ function Trucks() {
         break;
     }
   }
+
   function updateStatus(truck) {
     console.log("change status to negate ", truck.status);
   }
+
   function changeDetail(truck) {
-    console.log("edit ", truck.licence_number);
-    location.href = "/transporter/trucks/edit/" + truck.license_number;
+    location.href = "/transporter/trucks/edit/" + truck.id;
   }
+
   const options_active = [
     {
       label: "Change Detail",
@@ -111,7 +87,7 @@ function Trucks() {
   const columns = [
     {
       name: "License Number",
-      selector: (row) => row.license_number,
+      selector: (row) => row.plate_number,
     },
     {
       name: "Truck Type",
@@ -123,7 +99,7 @@ function Trucks() {
     },
     {
       name: "Production Year",
-      selector: (row) => row.prod_year,
+      selector: (row) => row.production_year,
     },
     {
       name: "Status",
@@ -140,72 +116,20 @@ function Trucks() {
     },
   ];
 
-  const data = [
-    {
-      license_number: "B 1234 CDE",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Active",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-    {
-      license_number: "B 1234 AHS",
-      truck_type: "Tronton",
-      plate_type: "Black",
-      prod_year: "2022",
-      status: "Inctive",
-    },
-  ];
-
   const [search, setSearch] = useState("");
   const [selectedTruckType, setSelectedTruckType] = useState(null);
-  const [cities, setCities] = useState([]);
+  const [trucks, setTrucks] = useState([]);
 
-  function fetchCity() {
+  function fetchTrucks() {
     axios
-      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=31")
-      .then((res) =>
-        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
-      );
-    axios
-      .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=32")
-      .then((res) =>
-        setCities((prev) => [...prev, ...res.data.kota_kabupaten])
-      );
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=33")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=34")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
-    // axios
-    // .get("https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=35")
-    // .then((res) => setCities(prev => [...prev, res.data.kota_kabupaten]));
+      .get("https://backend-hackathon-kargo-team9.herokuapp.com/truck/")
+      .then((res) => {
+        setTrucks(res.data);
+      });
   }
 
   useEffect(() => {
-    fetchCity();
+    fetchTrucks();
   }, []);
 
   return (
@@ -214,24 +138,33 @@ function Trucks() {
         <title>Trucks</title>
       </Head>
       <Navbar />
-      <Filter>
-        <div>
-          <Select
-            onChange={(n) => setSelectedTruckType(n.value)}
-            options={TRUCK_TYPES}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </Filter>
-      <TableContainer>
-        <DataTable columns={columns} data={data} />
-      </TableContainer>
+      <Content>
+        <Filter>
+          <div>
+            <Select
+              onChange={(n) => setSelectedTruckType(n.value)}
+              options={TRUCK_TYPES}
+            />
+          </div>
+          <div>
+            <button
+              style={{ marginRight: "10px" }}
+              onClick={() => location.assign("/transporter/trucks/add")}
+            >
+              Add Truck
+            </button>
+            <input
+              type="text"
+              placeholder="Search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </Filter>
+        <TableContainer>
+          <DataTable columns={columns} data={trucks} />
+        </TableContainer>
+      </Content>
     </Container>
   );
 }
